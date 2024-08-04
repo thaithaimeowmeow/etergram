@@ -4,12 +4,22 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Overtrue\LaravelFollow\Traits\Followable;
+use Overtrue\LaravelFollow\Traits\Follower;
+use Overtrue\LaravelLike\Traits\Liker;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+    use Liker;
+    
+    use Follower;
+    use Followable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'username',
     ];
 
     /**
@@ -43,5 +54,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    function avatar() : MorphMany
+    {
+        return $this->morphMany(Media::class,'mediable');
     }
 }
