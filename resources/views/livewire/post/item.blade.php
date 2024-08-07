@@ -11,15 +11,24 @@
                 <h5 class="font-semibold truncate text-sm">{{ $post->user->username }}<span> •
                         {{ $post->created_at->diffForHumans() }}</span></h5>
             </div>
+            @if (auth()->user()->id == $post->user->id)
             <div class="col-span-2 flex text-right justify-end">
-                <button class="text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-three-dots" viewBox="0 0 16 16">
-                        <path
-                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-                    </svg>
-                </button>
+                <div class="relative inline-block text-left">
+                    <button class="text-gray-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                        </svg>
+                    </button>
+                    
+                    <div wire:key="" class="z-50 hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                        <div class="py-1" role="none">
+                            <button wire:click="deletePost({{$post->id}})" class=" block px-4 py-2 text-sm text-red-600" role="menuitem" tabindex="-1" id="menu-item-0">Delete</button>
+                        </div>
+                    </div>
+                </div>
             </div>
+            @endif
+            
 
         </div>
     </header>
@@ -211,3 +220,17 @@
     </footer>
 
 </div>
+<script>
+    const button = document.getElementById('menu-button');
+    const menu = button.nextElementSibling;
+
+    button.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!button.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.add('hidden');
+        }
+    });
+</script>

@@ -36,6 +36,12 @@ class Item extends Component
 
     }
 
+    function deletePost($id)
+    {
+        $post = Post::findOrFail($id);
+        $this->dispatch('post-deleted', $post->id);
+    }
+
 
     public function render()
     {

@@ -18,7 +18,7 @@
             </svg>
         </div>
 
-        <img x-cloak x-show="!(shrink ||drawer)" src="{{ asset('assets/logo.png') }}" class="h-16 w-44 text-black"
+        <img x-cloak x-show="!(shrink ||drawer)" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Twitter_logo.svg/1024px-Twitter_logo.svg.png" class="h-16 w-44 text-black"
             alt="logo">
     </div>
 

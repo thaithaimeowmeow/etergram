@@ -27,7 +27,7 @@ class Search extends ModalComponent
 
 
         $this->results= User::where('username','like','%'.$query.'%')
-                              ->orWhere('name','like','%'.$query.'%')
+                              ->orWhere('username','like','%'.$query.'%')
                               ->get();
 
 

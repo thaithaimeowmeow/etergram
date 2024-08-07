@@ -29,6 +29,21 @@ class Home extends Component
         $this->posts = $this->posts->prepend($post);
     }
 
+    #[On('post-deleted')]
+    function postDeleted($id)
+    {
+        $post = Post::find($id);
+        if ($post) {
+            // Delete the post from the collection
+            $this->posts = $this->posts->reject(function ($item) use ($post) {
+                return $item->id === $post->id;
+            });
+    
+            // Delete the post from the database
+            $post->delete();
+        }
+    }
+
     function loadMorePosts()
     {
         if (!$this->loadable) {

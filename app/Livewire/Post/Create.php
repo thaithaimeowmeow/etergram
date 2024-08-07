@@ -20,6 +20,7 @@ class Create extends ModalComponent
     {
         $this->validate([
             'media.*' => 'required|file|mimes:png,jpg,mp4,jpeg,mov|max:12000',
+            'description' =>'string|max:50'
         ]);
 
         $type = $this->getPostType($this->media);
